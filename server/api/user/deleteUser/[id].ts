@@ -5,12 +5,9 @@ const prisma = new PrismaClient()
 export default eventHandler(async (event) => {
 
     // Get the userId from the route parameters
-    const params = event.context.params; // Store params in a variable
-    if (!params || typeof params.id !== 'string') { // Check if params is defined and id is a string
-        return { statusCode: 400, message: 'Invalid user ID' };
-    }
+    const { id } = event.context.params || {};
 
-    const userId = parseInt(params.id); // Now safe to access params.id
+    const userId = parseInt(id);
     // Get the body from the request
     const body = await readBody(event);
 
@@ -33,7 +30,7 @@ export default eventHandler(async (event) => {
     } catch (error) {
         // Handle the case where user is not found
         if (error instanceof Error) {
-            return { statusCode: 500, message: 'Error updating user', error: error.message }
+            return { statusCode: 500, message: 'Error deleting user', error: error.message }
         }
         if (error instanceof Error) {
             return { statusCode: 404, message: 'User not found', error: error.message }
