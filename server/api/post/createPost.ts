@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
             },
         })
 
-        return {statusCode: 200, user: newPost}
+        return {statusCode: 200, post: newPost}
     } catch (error) {
         // Handle the error for database issues
         if (error instanceof Prisma.PrismaClientKnownRequestError) {
